@@ -1,0 +1,25 @@
+
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: bold;
+	src: url('/public/fonts/Vazir-Bold-UI.ttf');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: 500;
+	src: url('/public/fonts/Vazir-Medium-UI.ttf');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	
+	src: url('/public/fonts/Vazir-Regular-UI.ttf');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: 100;
+	src: url('/public/fonts/Vazir-Thin-UI.ttf');
+}
