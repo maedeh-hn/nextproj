@@ -3,6 +3,9 @@ import type { NextPage } from "next";
 import {
   AdjustmentsVerticalIcon,
   ChevronDownIcon,
+  HeartIcon,
+  BookmarkIcon,
+  ChatBubbleBottomCenterIcon,
 } from "@heroicons/react/24/outline";
 import Head from "next/head";
 import Image from "next/image";
@@ -13,9 +16,9 @@ import { useState } from "react";
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 min-h-screen">
       <div className="container mx-auto lg:max-w-screen-xl">
-        <div className="grid gap-4 md:grid-cols-12 md:grid-rows-[70px_minmax(300px,1fr)] min-h-screen">
+        <div className="grid gap-4 md:grid-cols-12 md:grid-rows-[70px_minmax(300px,1fr)] ">
           <div className=" hidden md:block md:row-span-2 md:col-span-3">
             <div className="bg-white rounded-3xl overflow-hidden">
               <div
@@ -62,17 +65,58 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className=" md:col-span-9 grid grid-cols-6 gap-8">
-            {["next.png", "nodejs.webp", "nuxt.png", "vuejs.png", "nuxt.png", "vuejs.png"].map((item:any,index: any) => {
+            {[
+              "next.png",
+              "nodejs.webp",
+              "nuxt.png",
+              "vuejs.png",
+              "nuxt.png",
+              "vuejs.png",
+            ].map((item: any, index: any) => {
               return (
                 <div
                   key={index}
-                  className="col-span-6 md:col-span-3 lg:col-span-2 bg-[red] rounded-3xl p-2 max-w-[600px] w-full  relative"
+                  className="col-span-6 md:col-span-3 lg:col-span-2 bg-white rounded-3xl p-2 max-w-[600px] w-full flex flex-col  relative"
                 >
                   <div className="max-w-[600px] w-full rounded-3xl">
-                    <img      src={`/images/${item}`} className="w-full h-[150px] object-cover rounded-3xl"/>
-
+                    <img
+                      src={`/images/${item}`}
+                      className="w-full h-[150px] object-cover rounded-3xl"
+                    />
                   </div>
-                  <div className="bg-gray-50 rounded-2xl">content</div>
+                  <div className="bg-gray-50 p-2 rounded-2xl mt-5 flex flex-col justify-between flex-1">
+                    <h2 className="mb-4 font-bold">
+                      بررسی کامل ری اکت و ریداکس sghl sghsl sghsk sjs shjs bjbd
+                      sbfb skbfhh
+                    </h2>
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <img
+                            src="/images/vuejs.png"
+                            alt=""
+                            className="w-6 h-6 rounded-full ring-2 ring-white ml-2"
+                          />
+                          <span className="text-sm">شیوا مرادی</span>
+                        </div>
+                        <span className="text-xs px-2 py-1 rounded-xl bg-blue-300 text-blue-600 cursor-pointer">
+                          ری اکت
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between mt-5">
+                        <div className="flex items-center">
+                          <HeartIcon className="w-6 h-6" />
+                          <BookmarkIcon className="w-6 h-6" />
+                          <ChatBubbleBottomCenterIcon className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <span className="text-gray-500 text-xs">
+                            زمان مطالعه: 20 دقیقه
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               );
             })}
