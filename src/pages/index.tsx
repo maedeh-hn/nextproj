@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from "next";
 
 import {
   AdjustmentsVerticalIcon,
@@ -12,8 +12,9 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import { useState } from "react";
+import axios from "axios";
 
-const Home: NextPage = () => {
+const Home: NextPage = ({blogsData}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -128,3 +129,12 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (context) =>  { 
+ const {data}= await axios.get("http://localhost:5000/api/posts")
+  return {
+    props: {
+      blogsData:data,
+    }, // will be passed to the page component as props
+  }
+}
