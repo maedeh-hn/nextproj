@@ -3,9 +3,6 @@ import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from "
 import {
   AdjustmentsVerticalIcon,
   ChevronDownIcon,
-  HeartIcon,
-  BookmarkIcon,
-  ChatBubbleBottomCenterIcon,
 } from "@heroicons/react/24/outline";
 import Head from "next/head";
 import Image from "next/image";
@@ -13,9 +10,13 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
+import PostList from "@/component/posts/PostList";
+
 
 const Home: NextPage = ({blogsData}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(blogsData);
+  
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="container mx-auto lg:max-w-screen-xl">
@@ -66,61 +67,7 @@ const Home: NextPage = ({blogsData}: InferGetServerSidePropsType<typeof getServe
             </div>
           </div>
           <div className=" md:col-span-9 grid grid-cols-6 gap-8">
-            {[
-              "next.png",
-              "nodejs.webp",
-              "nuxt.png",
-              "vuejs.png",
-              "nuxt.png",
-              "vuejs.png",
-            ].map((item: any, index: any) => {
-              return (
-                <div
-                  key={index}
-                  className="col-span-6 md:col-span-3 lg:col-span-2 bg-white rounded-3xl p-2 max-w-[600px] w-full flex flex-col  relative"
-                >
-                  <div className="max-w-[600px] w-full rounded-3xl">
-                    <img
-                      src={`/images/${item}`}
-                      className="w-full h-[150px] object-cover rounded-3xl"
-                    />
-                  </div>
-                  <div className="bg-gray-50 p-2 rounded-2xl mt-5 flex flex-col justify-between flex-1">
-                    <h2 className="mb-4 font-bold">
-                      بررسی کامل ری اکت و ریداکس sghl sghsl sghsk sjs shjs bjbd
-                      sbfb skbfhh
-                    </h2>
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <img
-                            src="/images/vuejs.png"
-                            alt=""
-                            className="w-6 h-6 rounded-full ring-2 ring-white ml-2"
-                          />
-                          <span className="text-sm">شیوا مرادی</span>
-                        </div>
-                        <span className="text-xs px-2 py-1 rounded-xl bg-blue-300 text-blue-600 cursor-pointer">
-                          ری اکت
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between mt-5">
-                        <div className="flex items-center">
-                          <HeartIcon className="w-6 h-6" />
-                          <BookmarkIcon className="w-6 h-6" />
-                          <ChatBubbleBottomCenterIcon className="w-6 h-6" />
-                        </div>
-                        <div>
-                          <span className="text-gray-500 text-xs">
-                            زمان مطالعه: 20 دقیقه
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+<PostList blogsData={blogsData}/>
           </div>
         </div>
       </div>
@@ -131,7 +78,8 @@ const Home: NextPage = ({blogsData}: InferGetServerSidePropsType<typeof getServe
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) =>  { 
- const {data}= await axios.get("http://localhost:5000/api/posts")
+ const {data:result}= await axios.get("http://localhost:5000/api/posts")
+ const {data}=result
   return {
     props: {
       blogsData:data,
