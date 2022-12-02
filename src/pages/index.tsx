@@ -13,7 +13,7 @@ import axios from "axios";
 import PostList from "@/component/posts/PostList";
 
 
-const Home: NextPage = ({blogsData}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPage = ({blogsData,postCategoreis}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [isOpen, setIsOpen] = useState(false);
   console.log(blogsData);
   
@@ -35,15 +35,14 @@ const Home: NextPage = ({blogsData}: InferGetServerSidePropsType<typeof getServe
                 />
               </div>
               <div className={`${isOpen ? "block" : "hidden"}`}>
-                <Link href="#">
+                <Link href="/blogs">
                   <a className="pr-4 block py-1 mb-1">همه مقالات</a>
                 </Link>
-                <Link href="#">
-                  <a className="pr-4 block py-1 mb-1"> ری اکت</a>
-                </Link>
-                <Link href="#">
-                  <a className="pr-4 block py-1"> جاوا اسکریپت</a>
-                </Link>
+{postCategoreis.map((category:any,index:string)=>{
+                 return( <Link href={`/blogs/${category.englishTitle}`} key={category._id}>
+                 <a className="pr-4 block py-1 mb-1"> {category.title}</a>
+               </Link>)
+})}
               </div>
             </div>
           </div>
@@ -79,10 +78,12 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) =>  { 
  const {data:result}= await axios.get("http://localhost:5000/api/posts")
+ const {data:postCategoreis}= await axios.get("http://localhost:5000/api/post-category")
  const {data}=result
   return {
     props: {
       blogsData:data,
+      postCategoreis:postCategoreis.data
     }, // will be passed to the page component as props
   }
 }
