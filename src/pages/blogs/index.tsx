@@ -1,9 +1,67 @@
-import React from 'react'
+import type {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 
-const index = () => {
+import {
+  AdjustmentsVerticalIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import Link from "next/link";
+import { useState } from "react";
+import axios from "axios";
+import PostList from "@/component/posts/PostList";
+import SortBar from "@/component/posts/SortBar";
+import CategoryMobile from "@/component/posts/CategoryMobile";
+import CategoryDesktop from "@/component/posts/CategoryDesktop";
+
+const BlogPage: NextPage = ({
+  blogsData,
+  postCategoreis,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+ 
+  console.log(blogsData);
+
   return (
-    <div>index</div>
-  )
-}
+    <div className="bg-gray-50 min-h-screen py-4 px-3">
+      <div className="container mx-auto lg:max-w-screen-xl">
+        <div className="grid gap-4 md:grid-cols-12 md:grid-rows-[70px_minmax(300px,1fr)] ">
+          <div className=" hidden md:block md:row-span-2 md:col-span-3">
+            <CategoryDesktop
 
-export default index
+              postCategoreis={postCategoreis}
+            />
+          </div>
+          {/* category mobile */}
+          <CategoryMobile postCategoreis={postCategoreis} />
+          <div className=" hidden md:block md:col-span-9">
+            <SortBar />
+          </div>
+          <div className=" md:col-span-9 grid grid-cols-6 gap-8">
+            <PostList blogsData={blogsData} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BlogPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { data: result } = await axios.get("http://localhost:5000/api/posts");
+  const { data: postCategoreis } = await axios.get(
+    "http://localhost:5000/api/post-category"
+  );
+  const { data } = result;
+  return {
+    props: {
+      blogsData: data,
+      postCategoreis: postCategoreis.data,
+    }, // will be passed to the page component as props
+  };
+};
