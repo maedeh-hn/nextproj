@@ -1,3 +1,4 @@
+import PostInraction from "@/component/posts/PostIntraction";
 import { toPersionDigits } from "@/utils/toPersionDigits";
 import {
   BookmarkIcon,
@@ -10,12 +11,15 @@ import {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import React from "react";
-
-const postPage: NextPage<
+import React, { useState } from "react";
+import { FaTelegram } from "react-icons/fa";
+import { IoLogoTwitter, IoLogoLinkedin } from "react-icons/io";
+import {CopyToClipboard} from 'react-copy-to-clipboard'
+const PostPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ post }) => {
-  console.log(post);
+
+const [copied,setCopied]=useState<boolean>(false)
 
   return (
     <div className=" bg-gray-50 min-h-screen py-[2rem] px-[2rem] ">
@@ -60,8 +64,10 @@ const postPage: NextPage<
             </button>
           </div>
         </header>
-        <main className="prose prose-xl prose-slate prose-h1:text-3xl prose-h1:font-[700]
-         prose-h2:text-2xl prose-img:w-full prose-a:text-blue-500">
+        <main
+          className="prose prose-xl prose-slate prose-h1:text-3xl prose-h1:font-[700]
+         prose-h2:text-2xl prose-img:w-full prose-a:text-blue-500"
+        >
           <h1>{post.title}</h1>
           <h2>عنوان اول تستی</h2>
           <p>
@@ -94,12 +100,47 @@ const postPage: NextPage<
           </p>
           <a>لینک منبع مقاله</a>
         </main>
+        <section>
+          <ul className="flex items-center flex-wrap gap-x-4">
+            {["javsScript", "React", "NextJs", "فرانت اند"].map(
+              (tag: any, index) => {
+                return (
+                  <li
+                    key={index}
+                    className="py-1 px-3 rounded-2xl bg-gray-200 hover:bg-gray-100 transition-all text-gray-600 text-sm my-3 block"
+                  >
+                    {tag}
+                  </li>
+                );
+              }
+            )}
+          </ul>
+        </section>
+        <div>
+          <PostInraction post={post} />
+        </div>
+        <div className="flex gap-3 mt-4">
+          <a
+            className="block"
+            target="_blank"
+            rel="noreferrer"
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${process.env.DOMAIN_URL}/posts/${post?.hashId}/${post?.postSlug}`}
+          >
+            <IoLogoLinkedin size={20} />
+          </a>
+          <a className="block" target="_blank" href="">
+            <IoLogoTwitter size={20} />
+          </a>
+          <a className="block" target="_blank" href="">
+            <FaTelegram size={20} />
+          </a>
+        </div>
       </div>
     </div>
   );
 };
 
-export default postPage;
+export default PostPage;
 
 export async function getServerSideProps(context: any) {
   const { params } = context;

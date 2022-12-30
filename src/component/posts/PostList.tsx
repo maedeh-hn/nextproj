@@ -1,6 +1,7 @@
 import { BookmarkIcon, ChatBubbleBottomCenterIcon, HeartIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import React from 'react'
+import PostInraction from './PostIntraction'
 
 type propTypes={
     blogsData:any
@@ -53,26 +54,7 @@ const PostList = ({blogsData}:propTypes) => {
                         </Link>
                       </div>
                       <div className="flex items-center justify-between mt-5">
-                        <div className="flex items-center">
-                          <button className='bg-red-100 p-0.5 ronded flex items-center gap-x-1'>
-                          <HeartIcon className="w-4 h-4 stroke-red-500" />
-                          <span className='block text-xs font-bold leading-3 text-red-500'>
-                            {item.likesCount}
-                          </span>
-                          </button>
-
-                          <button className='bg-gray-100 p-0.5 ronded flex items-center gap-x-1'>
-                          <ChatBubbleBottomCenterIcon className="w-4 h-4 stroke-gray-500" />
-                          <span className='block text-xs font-bold leading-3 text-gray-500'>
-                            {item.commentsCount}
-                          </span>
-                          </button>
-                          <button className='bg-blue-100 p-0.5 ronded flex items-center gap-x-1'>
-                          <BookmarkIcon className="w-4 h-4 stroke-blu-500" />
-
-                          </button>
-                         
-                        </div>
+                          <PostInraction post={item}/>
                         <div>
                           <span className="text-gray-500 text-xs">
                             زمان مطالعه: {item.readingTime} دقیقه
